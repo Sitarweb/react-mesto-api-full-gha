@@ -1,0 +1,10 @@
+.header__infoblock{
+    display: flex;
+    padding: 51px 0 46px;
+}
+
+@media screen and (max-width: 767px){
+    .header__infoblock{
+        padding: 34px 30px 33px 0;
+    }
+}

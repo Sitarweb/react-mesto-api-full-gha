@@ -1,0 +1,32 @@
+.sign__submit-button{
+    height: 50px;
+    margin-top: 216px;
+    padding: 0;
+    border: none;
+    background: #FFFFFF;
+    border-radius: 2px;
+
+    transition: opacity 0.7s;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+}
+
+.sign__submit-button:hover{
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .sign__submit-button{
+        height: 46px;
+        margin-top: 173px;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}

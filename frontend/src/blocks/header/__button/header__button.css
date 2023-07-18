@@ -1,0 +1,21 @@
+.header__button{
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    max-height: 22px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: right;
+    background-color: #000000;
+}
+
+@media screen and (max-width: 767px){
+    .header__button{
+        font-size: 14px;
+        line-height: 17px;
+        color: #FFFFFF;
+    }
+}

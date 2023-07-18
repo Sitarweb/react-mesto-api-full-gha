@@ -1,0 +1,17 @@
+.sign__link{
+    margin-top: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width: 767px) {
+    .sign__link{
+        margin-top: 20px;
+    }
+}
