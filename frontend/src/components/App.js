@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header.js";
 import Main from "./Main.js";
@@ -21,18 +21,17 @@ function App() {
   const navigate = useNavigate();
 
   // Переменные внутреннего состояния
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [registered, setRegistered] = React.useState(false);
-  const [infoTooltipPopup, setInfoTooltipPopup] = React.useState(false);
-  const [infoTooltipText, setInfoTooltipText] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [registered, setRegistered] = useState(false);
+  const [infoTooltipPopup, setInfoTooltipPopup] = useState(false);
+  const [infoTooltipText, setInfoTooltipText] = useState("");
+  const [email, setEmail] = useState("");
 
   // Фунции изменения внутреннего состояния (открытие попапов)
   const handleEditProfileClick = () => setEditProfilePopupOpen(true);
@@ -49,7 +48,8 @@ function App() {
     setInfoTooltipPopup(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    api.getJwt();
     if (loggedIn) {
       api
         .getAllNeededData()
@@ -63,7 +63,7 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
@@ -154,23 +154,19 @@ function App() {
     setEmail("");
   }
 
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
-
-  function tokenCheck() {
+  useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       auth
         .getCurrentUser(jwt)
         .then((res) => {
           setLoggedIn(true);
-          setEmail(res.data.email);
+          setEmail(res.email);
           navigate("/");
         })
         .catch(console.error);
     }
-  }
+  }, [navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -249,7 +245,11 @@ function App() {
         name="infoTooltip"
         isOpen={infoTooltipPopup}
         image={registered ? success : fail}
-        altText={registered ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}
+        altText={
+          registered
+            ? "Вы успешно зарегистрировались!"
+            : "Что-то пошло не так! Попробуйте ещё раз."
+        }
         text={infoTooltipText}
         onClose={closeAllPopups}
       />

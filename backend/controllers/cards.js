@@ -47,7 +47,6 @@ module.exports.deleteCard = (req, res, next) => {
 
 module.exports.putLike = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
-    .populate(['owner', 'likes'])
     .then((card) => {
       if (!card) throw new NotFoundError('Карточка с указанным id не найдена');
       else res.send(card);
@@ -63,7 +62,6 @@ module.exports.putLike = (req, res, next) => {
 
 module.exports.deleteLike = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
-    .populate(['owner', 'likes'])
     .then((card) => {
       if (!card) throw new NotFoundError('Карточка с указанным id не найдена');
       else res.send(card);
