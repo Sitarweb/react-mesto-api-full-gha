@@ -25,11 +25,6 @@ const limiter = rateLimit({
 app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
 app.post('/signin', signin, login);
 app.post('/signup', signup, createUser);
 app.use('/users', auth, require('./routes/users'));
