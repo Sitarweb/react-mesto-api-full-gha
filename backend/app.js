@@ -11,8 +11,9 @@ const auth = require('./middlewares/auth');
 const { signup, signin } = require('./middlewares/validation');
 const NotFoundError = require('./errors/not-found-err');
 const errorHandler = require('./middlewares/error-handler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT, DB_URL } = process.env;
 const app = express();
 app.use(cors());
 
@@ -25,6 +26,12 @@ const limiter = rateLimit({
 app.use(helmet());
 app.use(limiter);
 app.use(bodyParser.json());
+app.use(requestLogger);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.post('/signin', signin, login);
 app.post('/signup', signup, createUser);
 app.use('/users', auth, require('./routes/users'));
@@ -33,6 +40,8 @@ app.use('/cards', auth, require('./routes/cards'));
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Маршрут не найден'));
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 
