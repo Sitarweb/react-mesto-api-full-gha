@@ -46,7 +46,14 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     }))
-    .then((user) => res.status(CREATED).send(user))
+    .then((user) => {
+      const {
+        userName, userAbout, userAvatar, userEmail,
+      } = user;
+      res.status(CREATED).send({
+        userName, userAbout, userAvatar, userEmail,
+      });
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы невалидные данные'));
