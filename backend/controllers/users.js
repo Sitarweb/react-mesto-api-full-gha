@@ -6,7 +6,8 @@ const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = require('../config');
+
 const CREATED = http2.constants.HTTP_STATUS_CREATED;
 
 module.exports.getUsers = (req, res, next) => {

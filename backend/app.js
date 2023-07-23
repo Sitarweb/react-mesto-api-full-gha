@@ -13,7 +13,8 @@ const NotFoundError = require('./errors/not-found-err');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT, DB_URL } = process.env;
+const { PORT, DB_URL } = require('./config');
+
 const app = express();
 app.use(cors());
 
