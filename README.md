@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.105.104
+IP 158.160.105.104
 
 Frontend https://semeontarasenko.nomoredomains.xyz
 
